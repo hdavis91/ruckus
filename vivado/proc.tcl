@@ -333,6 +333,8 @@ proc GenerateBdWrappers { } {
 
 ## Generate the build string
 proc GenerateBuildString {} {
+   # Get variables
+   source -quiet $::env(RUCKUS_DIR)/vivado/env_var.tcl
 
    # Generate the build string
    binary scan [encoding convertto ascii $::env(BUILD_STRING)] c* bstrAsic
@@ -373,6 +375,8 @@ proc GenerateBuildString {} {
    puts ${out} "end BuildInfoPkg;"
    close ${out}
 
+   # Add the auto-generated VHDL to Vivado
+   loadSource -lib ruckus -path ${pathToPkg}
 }
 
 ## Generate Verilog simulation models for a specific .dcp file

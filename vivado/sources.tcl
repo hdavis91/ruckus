@@ -39,17 +39,27 @@ VivadoRefresh ${VIVADO_PROJECT}
 
 # Generate the build string
 GenerateBuildString
-loadSource -lib ruckus -path ${pathToPkg}
 
 ########################################################
 ## Check for change in hash or fwVersion between builds
 ########################################################
 set pathToLog "${OUT_DIR}/${VIVADO_PROJECT}.srcs/BuildInfo.log"
 
+# Generate the Firmware Version string
+scan ${PRJ_VERSION} %x decVer
+set fwVersion [format %08X ${decVer}]
+
+# Generate the GIT SHA-1 string
+set gitHash $::env(GIT_HASH_LONG)
+while { [string bytelength $gitHash] != 40 } {
+   set gitHash "0${gitHash}"
+}
+
 # Check if file doesn't exist
 if { [expr [file exists ${pathToLog}]] == 0 } {
    reset_run synth_1
 } else {
+
 
    # Get the previous build info
    set in [open ${pathToLog} r]
