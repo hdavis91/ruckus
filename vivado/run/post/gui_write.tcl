@@ -17,6 +17,7 @@ source -quiet $::env(RUCKUS_DIR)/vivado/proc.tcl
 ########################################################
 ## Copy the FW image files
 ########################################################
+exec mkdir -p ${IMAGES_DIR}
 if { [isVersal] } {
    # Create Versal Output files
    CreateVersalOutputs
