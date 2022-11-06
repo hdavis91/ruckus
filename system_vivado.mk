@@ -381,9 +381,16 @@ batch : $(SOURCE_DEPEND)
 .PHONY      : sources
 sources     : $(SOURCE_DEPEND)
 
+.PHONY : IP
+IP : $(SOURCE_DEPEND)
+	$(call ACTION_HEADER,"Package IP from Target")
+	@cd $(OUT_DIR); vivado -source $(RUCKUS_DIR)/vivado/ip.tcl $(VIVADO_PROJECT).xpr
+
 ###############################################################
 #### Clean ####################################################
 ###############################################################
 .PHONY : clean
 clean:
 	rm -rf $(OUT_DIR)
+
+
