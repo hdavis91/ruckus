@@ -102,6 +102,7 @@ ifndef IP_REPO
 export IP_REPO = $(OUT_DIR)/ip_repo
 endif
 
+export IP_DIR = $(IP_REPO)/$(PROJECT)/
 ###############################################################
 
 ifndef SIM_CARGS_VERILOG
@@ -383,8 +384,10 @@ sources     : $(SOURCE_DEPEND)
 
 .PHONY : IP
 IP : $(SOURCE_DEPEND)
+	$(call ACTION_HEADER,"Vivado Synthesis Only")
+	@cd $(OUT_DIR); export SYNTH_ONLY=1; vivado -mode batch -source $(RUCKUS_DIR)/vivado/build.tcl
 	$(call ACTION_HEADER,"Package IP from Target")
-	@cd $(OUT_DIR); vivado -source $(RUCKUS_DIR)/vivado/ip.tcl $(VIVADO_PROJECT).xpr
+	@cd $(OUT_DIR); vivado -mode batch -source $(RUCKUS_DIR)/vivado/ip.tcl $(VIVADO_PROJECT).xpr
 
 ###############################################################
 #### Clean ####################################################
@@ -393,4 +396,12 @@ IP : $(SOURCE_DEPEND)
 clean:
 	rm -rf $(OUT_DIR)
 
+###############################################################
+#### Clean Project and Packaged IP Files#######################
+###############################################################
+
+.PHONY : clean_IP
+clean_IP:
+	rm -rf $(OUT_DIR)
+	rm -rf $(IP_DIR)
 
