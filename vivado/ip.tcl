@@ -1,4 +1,9 @@
 source -quiet $::env(RUCKUS_DIR)/vivado_proc.tcl
+source -quiet ${RUCKUS_DIR}/vivado/properties.tcl
+source -quiet ${RUCKUS_DIR}/vivado/messages.tcl
+loadSource -dir "$::DIR_PATH/hdl/IP/"
+set_property top ${PROJECT}_IP [current_fileset]
+update_compile_order -quiet -fileset sources_1
 RemoveUnsuedCode
 exec mkdir -p $::env(TOP_DIR)/build/ip_repo
 ipx::package_project -root_dir $::env(TOP_DIR)/build/ip_repo/$::env(PROJECT) -vendor user.org -library user -taxonomy /UserIP -import_files -set_current false
