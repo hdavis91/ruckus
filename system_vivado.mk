@@ -385,7 +385,7 @@ sources     : $(SOURCE_DEPEND)
 .PHONY : IP
 IP : $(SOURCE_DEPEND)
 	$(call ACTION_HEADER,"Vivado Synthesis Only")
-	@cd $(OUT_DIR); export SYNTH_ONLY=1; vivado -mode batch -source $(RUCKUS_DIR)/vivado/build.tcl
+	@cd $(OUT_DIR); export IP_BUILD=1; vivado -mode batch -source $(RUCKUS_DIR)/vivado/build.tcl
 	$(call ACTION_HEADER,"Package IP from Target")
 	@cd $(OUT_DIR); vivado -mode batch -source $(RUCKUS_DIR)/vivado/ip.tcl $(VIVADO_PROJECT).xpr
 
