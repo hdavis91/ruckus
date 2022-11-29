@@ -1,10 +1,11 @@
 source -quiet $::env(RUCKUS_DIR)/vivado_proc.tcl
-source -quiet ${RUCKUS_DIR}/vivado/properties.tcl
-source -quiet ${RUCKUS_DIR}/vivado/messages.tcl
-loadSource -dir "$::DIR_PATH/hdl/IP/"
-set_property top ${PROJECT}_IP [current_fileset]
+source -quiet $::env(RUCKUS_DIR)/vivado/properties.tcl
+source -quiet $::env(RUCKUS_DIR)/vivado/messages.tcl
+loadSource -dir $::env(TOP_DIR)/targets/$::env(PROJECT)/ip/
+set_property top $::env(PROJECT)_IP [current_fileset]
+set_property FILE_TYPE {VHDL 2008} [get_files *.vhd]
+set_property FILE_TYPE {VHDL} [get_files $::env(PROJECT)_IP.vhd]
 update_compile_order -quiet -fileset sources_1
-RemoveUnsuedCode
 exec mkdir -p $::env(TOP_DIR)/build/ip_repo
 ipx::package_project -root_dir $::env(TOP_DIR)/build/ip_repo/$::env(PROJECT) -vendor user.org -library user -taxonomy /UserIP -import_files -set_current false
 ipx::unload_core $::env(TOP_DIR)/build/$::env(PROJECT)/ip_repo/component.xml
@@ -23,4 +24,4 @@ ipx::check_integrity [ipx::current_core]
 ipx::save_core [ipx::current_core]
 ipx::check_integrity -quiet -xrt [ipx::current_core]
 ipx::move_temp_component_back -component [ipx::current_core]
-close_project -delete
+start_gui

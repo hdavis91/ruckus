@@ -99,7 +99,7 @@ export IMPL_DIR = $(OUT_DIR)/$(VIVADO_PROJECT).runs/impl_1
 
 # Define the user IP repo
 ifndef IP_REPO
-export IP_REPO = $(OUT_DIR)/ip_repo
+export IP_REPO = $(TOP_DIR)/build/ip_repo
 endif
 
 export IP_DIR = $(IP_REPO)/$(PROJECT)/
@@ -382,12 +382,10 @@ batch : $(SOURCE_DEPEND)
 .PHONY      : sources
 sources     : $(SOURCE_DEPEND)
 
-.PHONY : IP
-IP : $(SOURCE_DEPEND)
+.PHONY : ip
+ip : $(SOURCE_DEPEND)
 	$(call ACTION_HEADER,"Vivado Synthesis Only")
-	@cd $(OUT_DIR); export IP_BUILD=1; vivado -mode batch -source $(RUCKUS_DIR)/vivado/build.tcl
-	$(call ACTION_HEADER,"Package IP from Target")
-	@cd $(OUT_DIR); vivado -mode batch -source $(RUCKUS_DIR)/vivado/ip.tcl $(VIVADO_PROJECT).xpr
+	@cd $(OUT_DIR); export PACKAGE_IP=1; vivado -mode batch -source $(RUCKUS_DIR)/vivado/build.tcl
 
 ###############################################################
 #### Clean ####################################################
@@ -400,8 +398,8 @@ clean:
 #### Clean Project and Packaged IP Files#######################
 ###############################################################
 
-.PHONY : clean_IP
-clean_IP:
+.PHONY : clean_ip
+clean_ip:
 	rm -rf $(OUT_DIR)
 	rm -rf $(IP_DIR)
 

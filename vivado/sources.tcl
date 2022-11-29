@@ -126,9 +126,15 @@ if { $::IP_LIST != "" } {
 # Target specific source setup script
 SourceTclFile ${VIVADO_DIR}/sources.tcl
 
+#Add IP integration wrappers if make ip
+if { $::env(PACKAGE_IP) == 1 } {
+   loadSource -dir "$::env(TOP_DIR)/targets/$::env(PROJECT)/ip/"
+   set_property top ${PROJECT}_IP [current_fileset]
+}
+
 # Remove all unused code
 if { $::env(REMOVE_UNUSED_CODE) != 0 } {
-   RemoveUnsuedCode
+   RemoveUnusedCode
 }
 
 # Write the DIR list

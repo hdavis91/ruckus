@@ -67,6 +67,13 @@ BuildIpCores
 ########################################################
 source ${RUCKUS_DIR}/vivado/pre_synthesis.tcl
 
+
+if { [info exists ::env(PACKAGE_IP)] } {
+   source ${RUCKUS_DIR}/vivado/ip.tcl
+   exit 0
+}
+
+
 ########################################################
 ## Synthesize
 ########################################################
@@ -113,12 +120,6 @@ if { [info exists ::env(SYNTH_ONLY)] } {
    BuildInfo
    exit 0
 }
-
-if { [info exists ::env(PACKAGE_IP)] } {
-   source ${RUCKUS_DIR}/vivado/ip.tcl
-   exit 0
-}
-
 
 ########################################################
 ## Check if Synthesizen DCP Output

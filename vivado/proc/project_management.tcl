@@ -287,7 +287,7 @@ proc SetSynthOutOfContext { } {
 }
 
 ## Remove unused code
-proc RemoveUnsuedCode { } {
+proc RemoveUnusedCode { } {
    update_compile_order -quiet -fileset sources_1
    update_compile_order -quiet -fileset sim_1
    remove_files [get_files -filter {IS_AUTO_DISABLED}]
