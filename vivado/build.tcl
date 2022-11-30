@@ -69,8 +69,10 @@ source ${RUCKUS_DIR}/vivado/pre_synthesis.tcl
 
 
 if { [info exists ::env(PACKAGE_IP)] } {
-   source ${RUCKUS_DIR}/vivado/ip.tcl
-   exit 0
+   if { $::env(PACKAGE_IP) == 1 } {
+      source ${RUCKUS_DIR}/vivado/ip.tcl
+      exit 0
+   }
 }
 
 
