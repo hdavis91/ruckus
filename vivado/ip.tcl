@@ -30,4 +30,6 @@ ipx::check_integrity [ipx::current_core]
 ipx::save_core [ipx::current_core]
 ipx::check_integrity -quiet -xrt [ipx::current_core]
 ipx::move_temp_component_back -component [ipx::current_core]
+launch_runs synth_1
+wait_on_run synth_1
 close_project -delete
