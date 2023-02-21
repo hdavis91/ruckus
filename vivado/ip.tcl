@@ -11,15 +11,15 @@ ipx::package_project -root_dir $::env(TOP_DIR)/build/ip_repo/$::env(PROJECT) -ve
 ipx::unload_core $::env(TOP_DIR)/build/$::env(PROJECT)/ip_repo/component.xml
 ipx::edit_ip_in_project -upgrade true -name tmp_edit_project -directory $::env(TOP_DIR)/build/ip_repo/$::env(PROJECT) $::env(TOP_DIR)/build/ip_repo/$::env(PROJECT)/component.xml
 update_compile_order -fileset sources_1
-set_property enablement_value false [ipx::get_user_parameters AXILADDRWITDH_G -of_objects [ipx::current_core]]
+set_property enablement_value false [ipx::get_user_parameters AXILADDRWIDTH_G -of_objects [ipx::current_core]]
 
 if {[info exists ::env(NO_BRAM)]} {
-    set_property value_tcl_expr {expr ceil([expr {log(4*($NUMCONTREGS_G+$NUMSTATUSREGS_G))/[expr log(2)]}])} [ipx::get_user_parameters AXILADDRWITDH_G -of_objects [ipx::current_core]]
+    set_property value_tcl_expr {expr ceil([expr {log(4*($NUMCONTREGS_G+$NUMSTATUSREGS_G))/[expr log(2)]}])} [ipx::get_user_parameters AXILADDRWIDTH_G -of_objects [ipx::current_core]]
 } else {
-    set_property value_tcl_expr {expr ceil([expr {log(4*($AXILDATAREGDEPTH_G+$NUMCONTREGS_G+$NUMSTATUSREGS_G))/[expr log(2)]}])} [ipx::get_user_parameters AXILADDRWITDH_G -of_objects [ipx::current_core]]
+    set_property value_tcl_expr {expr ceil([expr {log(4*($AXILDATAREGDEPTH_G+$NUMCONTREGS_G+$NUMSTATUSREGS_G))/[expr log(2)]}])} [ipx::get_user_parameters AXILADDRWIDTH_G -of_objects [ipx::current_core]]
 }
 
-ipgui::remove_param -component [ipx::current_core] [ipgui::get_guiparamspec -name "AXILADDRWITDH_G" -component [ipx::current_core]]
+ipgui::remove_param -component [ipx::current_core] [ipgui::get_guiparamspec -name "AXILADDRWIDTH_G" -component [ipx::current_core]]
 ipgui::remove_param -component [ipx::current_core] [ipgui::get_guiparamspec -name "NUMCONTREGS_G" -component [ipx::current_core]]
 ipgui::remove_param -component [ipx::current_core] [ipgui::get_guiparamspec -name "NUMSTATUSREGS_G" -component [ipx::current_core]]
 set_property core_revision 1 [ipx::current_core]
